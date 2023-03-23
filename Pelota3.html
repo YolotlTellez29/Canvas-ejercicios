@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelota version 3</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: black;
+            font-family: cursive;
+        }
+
+        .glow {
+            font-size: 80px;
+            color: #fff;
+            text-align: center;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @-webkit-keyframes glow {
+            from {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+            }
+
+            to {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+            }
+        }
+
+        canvas {
+            padding: 0;
+            margin: auto;
+            display: block;
+            width: 800px;
+            height: 600px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+
+    <h1 class="glow">Pelota version 3</h1>
+
+    <canvas id="mycanvas" width="800" height="600" style="border:5px solid rgb(72, 255, 0);"></canvas>
+    <style>
+    </style>
+    <script>
+        const canvas = document.getElementById('mycanvas');
+        const ctx = canvas.getContext('2d');
+
+        const p = {
+            x: 400,
+            y: 300,
+        };
+
+        const ball1 = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            color: 'cyan',
+        };
+
+        const ball2 = {
+            x: canvas.width / 2 - 200,
+            y: canvas.height / 2 - 200,
+            color: 'magenta',
+        };
+
+        const ball3 = {
+            x: (canvas.width / 2) + 200,
+            y: (canvas.height / 2) + 200,
+            color: 'red',
+        }
+
+        const velo = 3;
+        const angle = 90;
+        const rad = 50;
+
+        let moveX1 = Math.cos(Math.PI / 180 * angle) * velo;
+        let moveY1 = Math.sin(Math.PI / 180 * angle) * velo;
+
+        let moveX2 = Math.cos(Math.PI / 180 * angle) * velo;
+        let moveY2 = Math.sin(Math.PI / 180 * angle) * velo;
+
+        let moveX3 = Math.cos(Math.PI / 180 * angle) * velo;
+        let moveY3 = Math.sin(Math.PI / 180 * angle) * velo;
+
+
+        const drawBall = (ball) => {
+            ctx.beginPath();
+            ctx.fillStyle = ball.color;
+            ctx.arc(ball.x, ball.y, rad, 0, Math.PI * 2, false);
+            ctx.fill();
+            ctx.closePath();
+        };
+
+        const DrawMe = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (ball1.x > canvas.width - rad || ball1.x < rad) moveX1 = -moveX1;
+            if (ball1.y > canvas.height - rad || ball1.y < rad) moveY1 = -moveY1;
+            ball1.x += moveX1;
+            ball1.y += moveY1;
+
+            if (ball2.x > canvas.width - rad || ball2.x < rad) moveX2 = -moveX2;
+            if (ball2.y > canvas.height - rad || ball2.y < rad) moveY2 = -moveY2;
+            ball2.x += moveX2;
+            ball2.y += moveY2;
+
+            if (ball3.x > canvas.width - rad || ball3.x < rad) moveX3 = -moveX3;
+            if (ball3.y > canvas.height - rad || ball3.y < rad) moveY3 = -moveY3;
+            ball3.x += moveX3;
+            ball3.y += moveY3;
+
+            drawBall(ball1);
+            drawBall(ball2);
+            drawBall(ball3);
+        };
+
+        setInterval(DrawMe, 10);
+
+    </script>
+</body>
+
+</html>
